@@ -151,8 +151,9 @@ def make_embed(addons_dict, colour=0xff00ff):
         if key is not None: # display package-less add-ons at the bottom
             desc+='**'+key+'**'+'\n'
             desc+=process_list(addons_dict[key], prefix='--')
-    desc+='**'+'[NO PACKAGE]'+'**'+'\n'
-    desc+=process_list(addons_dict[None], prefix='--')
+    if None in addons_dict:
+        desc+='**'+'[NO PACKAGE]'+'**'+'\n'
+        desc+=process_list(addons_dict[None], prefix='--')
     em = embed.create_embed(description=desc, footer=footer, colour=colour)
     return em
 
