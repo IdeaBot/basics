@@ -76,7 +76,7 @@ class Command(command.AdminCommand, command.DirectOnlyCommand):
 
         elif is_reaction and (not is_two or ('-r' in message.content and is_two)):
             help = self.make_help(args.group(1), client.reactions[args.group(1)]._help(verbose=is_verbose))
-            pkg = client.get_package(args.group(1), client.REACTIOS)
+            pkg = client.get_package(args.group(1), client.REACTIONS)
             if pkg!=None:
                 addon_type=self.public_namespace.PACKAGES
                 addon_name=pkg
