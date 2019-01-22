@@ -31,7 +31,7 @@ The Unload command is definitely restricted to certain users'''
         args = self.collect_args(message)
         return args!=None and args.group(1).count('/')<=2
     def collect_args(self, message):
-        return re.search(r'\bunload\s*\`?((reactions|commands|plugins)\/[\w\!\_\/]+(?=\.py))\`?', message.content)
+        return re.search(r'\bunload\s*\`?((reactions|commands|plugins|addons)\/[\w\!\_\/]+(?=\.py))\`?', message.content)
 
     def action(self, message, bot):
         args = self.collect_args(message)
@@ -74,6 +74,9 @@ The Unload command is definitely restricted to certain users'''
                     pass
                 elif addon_type==self.public_namespace.PLUGINS and addon_name in bot.plugins:
                     pass
+                elif addon_type==self.public_namespace.ADDONS:
+                    yield from self.send_message(message.channel, '`%s` %s is incompatible with this command' %(addon_name, type[:-1]) )
+                    return
                 else:
                     yield from self.send_message(message.channel, '`%s` %s does not exist' %(addon_name, type[:-1]) )
                     return

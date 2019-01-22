@@ -6,6 +6,7 @@ TEMP_START = 'data/temp'
 COMMAND = 'commands'
 REACTION = 'reactions'
 PLUGIN = 'plugins'
+ADDON = 'addons'
 
 class Command(command.AdminCommand, command.DirectOnlyCommand):
     '''Loads a python file from the server and tries to add it as an add-on
@@ -29,7 +30,7 @@ For new commands, anyone can add them!'''
         args = self.collect_args(message)
         return args != None and args.group(1).count('/')<=2
     def collect_args(self, message):
-        return re.search(r'\bload\s+\`?((reactions|commands|plugins)\/[\w\_\/]+(?=\.py))\`?',message.content)
+        return re.search(r'\bload\s+\`?((reactions|commands|plugins|addons)\/[\w\_\/]+(?=\.py))\`?',message.content)
 
     def action(self, message, bot):
         try:
@@ -147,7 +148,7 @@ For new commands, anyone can add them!'''
             elif addon_type==PLUGIN:
                 bot.load_plugin(py_filename, cmd_name, package=package, reload=is_reload)
             else:
-                return
+                bot.load_addon(py_filename, cmd_name, package=package, reload=is_reload)
             yield from self.send_message(message.channel, self.get_response(name, is_reload, is_download, has_config, config_loaded))
         except:
             traceback.print_exc()
