@@ -59,7 +59,7 @@ class Command(command.AdminCommand, command.DirectOnlyCommand):
             yield from send_func(response_channel, MULTIPLE_RESULTS)
 
         elif is_command and (not is_two or ('-c' in message.content and is_two)):
-            help = self.make_help(args.group(1), client.commands[args.group(1)]._help(verbose=is_verbose))
+            help = self.make_help(args.group(1), client.commands[args.group(1)]._help(args.group(2), verbose=is_verbose))
             pkg = client.get_package(args.group(1), client.COMMANDS)
             if pkg!=None:
                 addon_type=self.public_namespace.PACKAGES
@@ -75,7 +75,7 @@ class Command(command.AdminCommand, command.DirectOnlyCommand):
             yield from send_func(response_channel, embed=help)
 
         elif is_reaction and (not is_two or ('-r' in message.content and is_two)):
-            help = self.make_help(args.group(1), client.reactions[args.group(1)]._help(verbose=is_verbose))
+            help = self.make_help(args.group(1), client.reactions[args.group(1)]._help(args.group(2), verbose=is_verbose))
             pkg = client.get_package(args.group(1), client.REACTIONS)
             if pkg!=None:
                 addon_type=self.public_namespace.PACKAGES
@@ -91,7 +91,7 @@ class Command(command.AdminCommand, command.DirectOnlyCommand):
             yield from send_func(response_channel, embed=help)
 
         elif is_plugin and (not is_two or ('-l' in message.content and is_two)):
-            help = self.make_help(args.group(1), client.plugins[args.group(1)]._help(verbose=is_verbose))
+            help = self.make_help(args.group(1), client.plugins[args.group(1)]._help(args.group(2), verbose=is_verbose))
             pkg = client.get_package(args.group(1), client.PLUGINS)
             if pkg!=None:
                 addon_type=self.public_namespace.PACKAGES
@@ -125,7 +125,7 @@ class Command(command.AdminCommand, command.DirectOnlyCommand):
             yield from send_func(response_channel, 'Add-on not found')
 
     def collect_args(self, message):
-        return re.search(r'help\b(?:\sme)?(?:\swith)?(?:\s([^\-\s]\S*))?', message.content, re.I)
+        return re.search(r'help\b(?:\sme)?(?:\swith)?(?:\s([^\-\s]\S*))?(?:\s+(.*))?', message.content, re.I)
 
     def make_help(self, name, docstring):
         description = '%s Help\n' % name
