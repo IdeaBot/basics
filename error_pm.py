@@ -25,8 +25,20 @@ class Plugin(plugin.AdminPlugin):
     @asyncio.coroutine
     def on_command_error(self, cmd_name, error, message):
         if isinstance(error, discord.DiscordException):
-            log.info("Caught discord exception in %s" %cmd_name)
+            keys_list = list(self.bot.commands.keys())
+            if cmd_name == keys_list[-1] and 'invalid' in keys_list[-1].lower():
+                return
+            log.info("Caught discord exception in %s" % cmd_name)
+            error_msg = self.make_error_str(error, cmd_name)
+            try:
+                yield from self.send_message(message.channel, error_msg)
+            except discord.Forbidden:
+                try:
+                    yield from self.send_message(message.author, error_msg)
+                except discord.Forbidden:
+                    log.warning("Sending discord error failed during exception in %s" % cmd_name)
             return
+        
         package = self.get_package(cmd_name, self.bot.COMMANDS)
         if not package:
             type = self.public_namespace.COMMANDS
@@ -56,8 +68,20 @@ class Plugin(plugin.AdminPlugin):
     @asyncio.coroutine
     def on_reaction_error(self, cmd_name, error, reaction, user):
         if isinstance(error, discord.DiscordException):
-            log.info("Caught discord exception in %s" %cmd_name)
+            keys_list = list(self.bot.reactions.keys())
+            if cmd_name == keys_list[-1] and 'invalid' in keys_list[-1].lower():
+                return
+            log.info("Caught discord exception in %s" % cmd_name)
+            error_msg = self.make_error_str(error, cmd_name)
+            try:
+                yield from self.send_message(reaction.message.channel, error_msg)
+            except discord.Forbidden:
+                try:
+                    yield from self.send_message(user, error_msg)
+                except discord.Forbidden:
+                    log.warning("Sending discord error failed during exception in %s" % cmd_name)
             return
+            
         package = self.get_package(cmd_name, self.bot.REACTIONS)
         if not package:
             type = self.public_namespace.COMMANDS
@@ -87,3 +111,15 @@ class Plugin(plugin.AdminPlugin):
         for package in self.bot.packages:
             if cmd_name in self.bot.packages[package][addon_type]:
                 return package
+    
+    def make_error_str(self, error, name):
+        if isinstance(error, discord.Forbidden):
+            result = 'Missing permissions to do that while executing `%s`.' % name
+        elif isinstance(error, discord.NotFound):
+            result = 'Failed to find something while executing `%s`.' % name
+        elif isinstance(error, discord.HTTPException):
+            result = 'An HTTP issue occured in `%s`.' % name
+        else:
+            result = 'An unknown error occured in `%s`' % name
+        result += ' If this is an error, please contact the developer ```%s``` ' % str(error)
+        return result
