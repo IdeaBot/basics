@@ -4,6 +4,8 @@ IdeaBot add-ons package to provide basic functionality, like help messages and p
 ## Overview
 
 ### Commands
+This outlines the functionality of each command.
+Use `@Idea help <command name>` to get usage instructions.
 
 * help
 > Get helpful info about an add-on
@@ -53,8 +55,8 @@ IdeaBot add-ons package to provide basic functionality, like help messages and p
 > Sends errors to the owner of the add-on through private messages.
 
 # Documentation
-Some functions in the basics package offer functionality to all add-ons, not just add-ons within the basics package. 
-This functionality is explained here. 
+Some functions in the basics package offer functionality to all add-ons, not just add-ons within the basics package.
+This functionality is explained here.
 
 ## Help
 I've fallen and I can't get up
@@ -69,14 +71,10 @@ The easiest way to make a help string is to write a docstring for the your class
 Help uses the `help(help_args_str)` function implemented by the all add-ons to generate the helpstring. By default (as implemented in the base add-on class), this returns the docstring of the class, but it can be overriden. To change the behaviour, override the help method in your add-on implementation.
 
 * **help(help_args_str)** : string
-> **help_args_str**: 
-> the rest of the help message. 
-> E.g. if the help message content is `@Idea help my_command some stuff afterwards`, `help_args_str` will contain `some stuff afterwards`. 
+> **help_args_str**:
+> the rest of the help message.
+> E.g. if the help message content is `@Idea help my_command some stuff afterwards`, `help_args_str` will contain `some stuff afterwards`.
 > See [UIdea's UI.py](https://github.com/IdeaBot/UIdea/blob/master/UI.py) add-on for an example of how to use this to modify the behaviour.
 
 ### A Note on Future-Proofing
 Parameters passed to a function may change as features are added, so you should always end the function parameters with `*args, **kwargs` to ensure your function will continue to work in the future.
-
-
-
-
