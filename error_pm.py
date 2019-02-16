@@ -23,7 +23,7 @@ class Plugin(plugin.AdminPlugin):
         self.bot.on_reaction_add_error=self.bot.on_reaction_remove_error=self.on_reaction_error
         for name in self.bot.plugins:
             plugin = self.bot.plugins[name]
-            plugin.on_action_error = lambda e : self.on_plugin_error(str(name), e)
+            plugin.on_action_error = lambda e, name=name: self.on_plugin_error(name, e)
 
     @asyncio.coroutine
     def on_command_error(self, cmd_name, error, message):
