@@ -54,7 +54,7 @@ class Command(command.AdminCommand, command.DirectOnlyCommand):
         is_command = args.group(1) in client.commands
         is_plugin = args.group(1) in client.plugins
         is_two = (is_reaction + is_command + is_plugin) > 1
-        end_of_message = re.sub(r'-\b\w\b', '', args.group(2))
+        end_of_message = re.sub(r'-\b\w\b', '', args.group(2)) if args.group(2) is not None else ''
 
         if is_two and not has_flag:
             yield from send_func(response_channel, MULTIPLE_RESULTS)
