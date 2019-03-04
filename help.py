@@ -54,12 +54,13 @@ class Command(command.AdminCommand, command.DirectOnlyCommand):
         is_command = args.group(1) in client.commands
         is_plugin = args.group(1) in client.plugins
         is_two = (is_reaction + is_command + is_plugin) > 1
+        end_of_message = re.sub(r'-\b\w\b', '', args.group(2))
 
         if is_two and not has_flag:
             yield from send_func(response_channel, MULTIPLE_RESULTS)
 
         elif is_command and (not is_two or ('-c' in message.content and is_two)):
-            help = self.make_help(args.group(1), client.commands[args.group(1)]._help(args.group(2), verbose=is_verbose))
+            help = self.make_help(args.group(1), client.commands[args.group(1)]._help(end_of_message, verbose=is_verbose))
             pkg = client.get_package(args.group(1), client.COMMANDS)
             if pkg!=None:
                 addon_type=self.public_namespace.PACKAGES
@@ -75,7 +76,7 @@ class Command(command.AdminCommand, command.DirectOnlyCommand):
             yield from send_func(response_channel, embed=help)
 
         elif is_reaction and (not is_two or ('-r' in message.content and is_two)):
-            help = self.make_help(args.group(1), client.reactions[args.group(1)]._help(args.group(2), verbose=is_verbose))
+            help = self.make_help(args.group(1), client.reactions[args.group(1)]._help(end_of_message, verbose=is_verbose))
             pkg = client.get_package(args.group(1), client.REACTIONS)
             if pkg!=None:
                 addon_type=self.public_namespace.PACKAGES
@@ -91,7 +92,7 @@ class Command(command.AdminCommand, command.DirectOnlyCommand):
             yield from send_func(response_channel, embed=help)
 
         elif is_plugin and (not is_two or ('-l' in message.content and is_two)):
-            help = self.make_help(args.group(1), client.plugins[args.group(1)]._help(args.group(2), verbose=is_verbose))
+            help = self.make_help(args.group(1), client.plugins[args.group(1)]._help(end_of_message, verbose=is_verbose))
             pkg = client.get_package(args.group(1), client.PLUGINS)
             if pkg!=None:
                 addon_type=self.public_namespace.PACKAGES
