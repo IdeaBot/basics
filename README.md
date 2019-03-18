@@ -10,7 +10,7 @@ Use `@Idea help <command name>` to get usage instructions.
 * help
 > Get helpful info about an add-on
 
-* dice_roll
+* random
 > Generate a random number.
 
 * featurelist
@@ -25,7 +25,7 @@ Use `@Idea help <command name>` to get usage instructions.
 * timezone
 > Convert times between timezones.
 
-* emoji_starter
+* setemoji
 > Associate an emoji to a command, with help from emoji_setter.
 
 * emoji_setter
@@ -34,24 +34,24 @@ Use `@Idea help <command name>` to get usage instructions.
 * perms_setter
 > Give a user permission to use a command.
 
-* list *(Deprecated)*
+* ?list *(Deprecated)*
 > List available commands, reaction-command or plugins. THIS HAS BEEN INTEGRATED INTO HELP
 
-* load
+* !load
 > Load or reload an add-on.
 
-* unload
+* !unload
 > Partially disable an add-on by removing it's owners and maintainers.
 
-* commanders
+* ?commanders
 > Update owners and maintainers of packages and add-ons, which dictate permissions for loading & unloading.
 
-* setup *(Dummy)*
+* !setup *(Dummy)*
 > Sets up some things for other add-ons. This does not (directly) offer any functionality to users.
 
 ### Other Functions
 
-* error_pm
+* error_reporter
 > Sends errors to the owner of the add-on through private messages.
 
 # Documentation
@@ -59,7 +59,7 @@ Some functions in the basics package offer functionality to all add-ons, not jus
 This functionality is explained here.
 
 ## Help
-I've fallen and I can't get up
+I've fallen and I can't get up (I wonder how many times I've made this joke in the documentation...)
 
 ### Functionality
 Help is designed to provide help information to users.

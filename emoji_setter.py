@@ -2,7 +2,7 @@ from libs import reaction
 
 class Reaction(reaction.AdminReactionAddCommand):
     '''Sets emojis to commands in servers
-This works alongside `emoji_starter`
+This works alongside `set_emoji`
 
 **Usage**
 React with an emoji to the message sent in response to `emoji_starter` to use that emoji

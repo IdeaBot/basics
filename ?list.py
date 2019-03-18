@@ -14,7 +14,7 @@ The list of commands/reactions/plugins is provided in the following form:
 *(respectively)*
 
 **NOTE:** Most package names do not work with `help`
-**__WARNING:__** This command has been deprecated. Please use `help (commands/reactions/plugins)` instead '''
+**__WARNING:__** This command will be removed with the next point release (v1.0). Please use `help (commands/reactions/plugins)` instead '''
     def matches(self, message):
         return self.collect_args(message) != None
 

@@ -18,9 +18,8 @@ If you're interested in helping to improve Idea, check out what happens when you
 
     MESSAGE = '''
     Got a sweet new idea for Idea? Send it to the devs here:
-    <https://discord.gg/gwq2vS7> in #wishlist
-    Or create a feature request on GitHub:
-    <https://github.com/NGnius/IdeaBot/issues>'''
+    <https://discord.gg/gwq2vS7> in #ideas
+    Or inject your idea into the pipe named "Idea Ideas" '''
 
     MESSAGE_V = MESSAGE+'''
 
